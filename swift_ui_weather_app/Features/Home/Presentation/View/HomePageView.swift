@@ -39,38 +39,33 @@ struct HomePageView: View {
                     Spacer().frame(height: 60)
                     Text(
                         location.title,
-                    ).font(
-                        .system(size: 32, weight: .regular, design: .rounded)
-                    ).foregroundColor(.white)
+                    ).font(.headline)
+                        .foregroundColor(.white)
                     Spacer().frame(height: 8)
                     Text(
                         String(format: "%d°C", currentWeather.temperatureCelsium)
-                    ).font(
-                        .system(size: 70, weight: .bold, design: .default)
-                    ).foregroundColor(.white)
+                    ).font(.headlineHuge)
+                        .foregroundColor(.white)
                     Spacer().frame(height: 48)
                     HStack(alignment: .top){
                         VStack{
                             Text(
                                 String(format: "Wind: %d km/h", currentWeather.windKm)
-                            ).font(
-                                .system(size: 20, weight: .regular, design: .default)
-                            ).foregroundColor(.white)
+                            ).font(.caption)
+                                .foregroundColor(.white)
                             Spacer().frame(height: 8)
                             Text(
                                 String(format: "Feels like: %d °C", currentWeather.feelsLikeCelsium)
-                            ).font(
-                                .system(size: 20, weight: .regular, design: .default)
-                            ).foregroundColor(.white)
+                            ).font(.caption)
+                                .foregroundColor(.white)
                         }
                         Spacer()
                         VStack{
                             Text(
                                 
                                 String(format: "Humidity: %d", currentWeather.humidity)
-                            ).font(
-                                .system(size: 20, weight: .regular, design: .default)
-                            ).foregroundColor(.white)
+                            ).font(.caption)
+                                .foregroundColor(.white)
                         }
                     }.padding(.horizontal, 48)
                         .frame(width: HomePageView.screenWidth)

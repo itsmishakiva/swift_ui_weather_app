@@ -38,12 +38,12 @@ extension HomePageView {
                     Text(
                         "Monday"
                     ).font(
-                        .system(size: 20, weight: .regular, design: .default)
+                        .caption
                     ).foregroundColor(.white)
                     Text(
                         currentWeather == nil ? "" : String(format: "%d°C", currentWeather!.temperatureCelsium)
                     ).font(
-                        .system(size: 24, weight: .bold, design: .default)
+                        .captionBold
                     ).foregroundColor(.white)
                     Image(systemName: "sun.max.fill")
                         .resizable()
