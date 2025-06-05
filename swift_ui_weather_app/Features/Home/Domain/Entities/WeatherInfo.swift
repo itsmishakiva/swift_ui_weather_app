@@ -6,4 +6,5 @@ struct WeatherInfo: Identifiable {
     let windKm: Int
     let feelsLikeCelsium: Int
     let humidity: Int
+    let isDay: Bool
 }

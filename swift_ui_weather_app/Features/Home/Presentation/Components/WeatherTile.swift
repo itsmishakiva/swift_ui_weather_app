@@ -2,10 +2,11 @@ import SwiftUICore
 
 extension HomePageView {
     struct WeatherTile : View {
-        let currentWeather:WeatherInfo?
+        let weather:HourlyWeatherInfo
         
-        init(currentWeather: WeatherInfo?) {
-            self.currentWeather = currentWeather
+        init(weather: HourlyWeatherInfo) {
+            self.weather = weather
+            print("\(weather.time) \(weather.weatherInfo.isDay)")
         }
         
         var body: some View {
@@ -36,16 +37,16 @@ extension HomePageView {
                     .shadow(radius: 10)
                 VStack {
                     Text(
-                        "Monday"
+                        weather.time
                     ).font(
                         .caption
                     ).foregroundColor(.white)
                     Text(
-                        currentWeather == nil ? "" : String(format: "%d°C", currentWeather!.temperatureCelsium)
+                        "\(weather.weatherInfo.temperatureCelsium) °C"
                     ).font(
                         .captionBold
                     ).foregroundColor(.white)
-                    Image(systemName: "sun.max.fill")
+                    Image(systemName: weather.weatherInfo.isDay ? "sun.max.fill" : "moon.fill")
                         .resizable()
                         .frame(width: 40, height: 40)
                         .foregroundColor(.white)

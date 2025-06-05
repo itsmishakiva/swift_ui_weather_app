@@ -5,7 +5,12 @@ struct HomePageView: View {
     static let screenWidth = screenSize.width
     static let screenHeight = screenSize.height
     
-    @StateObject private var viewModel = ContentViewModel()
+    @StateObject private var viewModel = HomePageViewModel(
+        repository: DefaultWeatherRepository(
+            apiClient: DefaultWeatherApiClient(),
+            mapper: WeatherMapper()
+        )
+    )
     
     var body: some View {
         ZStack {
@@ -18,14 +23,16 @@ struct HomePageView: View {
                 var currentImageURL: String {
                     data.currentImageURL
                 }
-                
                 var currentWeather: WeatherInfo {
                     data.currentWeather
                 }
-                
                 var location: Location {
                     data.location
                 }
+                var forecast: [HourlyWeatherInfo]? {
+                    data.forecast
+                }
+                
                 
                 AsyncImage(url: URL(string: currentImageURL)) { image in
                     image
@@ -68,23 +75,24 @@ struct HomePageView: View {
                                 .foregroundColor(.white)
                         }
                     }.padding(.horizontal, 48)
-                        .frame(width: HomePageView.screenWidth)
                     Spacer()
-                    ScrollView(Axis.Set.horizontal, showsIndicators: false){
-                        HStack(spacing: 16) {
-                            Spacer().frame(width: 0)
-                            ForEach(0..<7, id: \.self) { index in
-                                WeatherTile(currentWeather: currentWeather)
+                    if forecast != nil {
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack(spacing: 16) {
+                                Spacer().frame(width: 0)
+                                ForEach(forecast!) { weather in
+                                    WeatherTile(weather: weather)
+                                }
+                                Spacer().frame(width: 0)
                             }
-                            Spacer().frame(width: 0)
                         }
-                    }.frame(width: HomePageView.screenWidth)
+                    }
                     Spacer().frame(height: 60)
-                }
+                }.frame(width: HomePageView.screenWidth)
             }
         }.onAppear {
             Task {
-                await viewModel.getData()
+                await viewModel.getCurrentWeather()
             }
         }
     }
