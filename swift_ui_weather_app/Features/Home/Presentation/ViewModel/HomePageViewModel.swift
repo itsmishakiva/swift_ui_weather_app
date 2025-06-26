@@ -17,6 +17,7 @@ extension HomePageView {
             if case .data(let currentState) = state {
                 do {
                     let forecast = try await repository.getWeatherForDay(location: currentState.location)
+                    print(forecast)
                     await MainActor.run {
                         self.state = .data(
                             HomePageViewState(
@@ -28,6 +29,7 @@ extension HomePageView {
                         )
                     }
                 } catch {
+                    print(error)
                     await MainActor.run {
                         self.state = .error(error)
                     }

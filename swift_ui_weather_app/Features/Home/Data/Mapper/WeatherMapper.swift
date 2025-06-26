@@ -20,7 +20,6 @@ class WeatherMapper {
         formatter.timeZone = .current
 
         let timeString = formatter.string(from: date)
-        print("\(timeString) \(dto.isDay == 1)")
         
         return HourlyWeatherInfo(
             time: timeString,

@@ -1,12 +1,13 @@
 import SwiftUICore
+import SwiftUI
+
 
 extension HomePageView {
-    struct WeatherTile : View {
+    struct WeatherForHourTile : View {
         let weather:HourlyWeatherInfo
         
         init(weather: HourlyWeatherInfo) {
             self.weather = weather
-            print("\(weather.time) \(weather.weatherInfo.isDay)")
         }
         
         var body: some View {
@@ -15,7 +16,7 @@ extension HomePageView {
                     .fill(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                Gradient.Stop(color: Color.white.opacity(0.4), location: 0),
+                                Gradient.Stop(color: Color.white.opacity(0.25), location: 0),
                                 Gradient.Stop(color: Color.white.opacity(0), location: 1)
                             ]),
                             startPoint: .topTrailing,
@@ -24,8 +25,8 @@ extension HomePageView {
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.white.opacity(0.1))
-                            .stroke(Color.white.opacity(0.4), lineWidth: 1)
+                            .fill(Color.white.opacity(0.05))
+                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
                             .blur(radius: 1)
                     )
                     .overlay(
@@ -54,4 +55,8 @@ extension HomePageView {
             }.frame(width: 120, height: 190)
         }
     }
+}
+
+#Preview {
+    HomePageView()
 }

@@ -1,3 +1,4 @@
+import Foundation
 class DefaultWeatherRepository: WeatherRepository {
     private let apiClient: WeatherApiClient
     private let mapper: WeatherMapper
@@ -13,7 +14,9 @@ class DefaultWeatherRepository: WeatherRepository {
     }
     
     func getWeatherForDay(location: Location) async throws -> [HourlyWeatherInfo] {
-        let dto = try await apiClient.getWeatherForDay(location: location)
-        return dto.forecast.forecastday.first?.hour.map {mapper.hourlyWeatherInfoFromHourInfoDTO(dto: $0)} ?? []
+        var hoursInfo = (try await apiClient.getWeatherForDay(location: location)).forecast.forecastday.first?.hour ?? []
+        hoursInfo.removeAll{$0.timeEpoch < Int(Date().timeIntervalSince1970)}
+        let hourlyWeather = hoursInfo.map {mapper.hourlyWeatherInfoFromHourInfoDTO(dto: $0)}
+        return hourlyWeather
     }
 }
